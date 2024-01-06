@@ -100,6 +100,7 @@ export default function Home() {
         type="file"
         name="photo"
         accept=".jpg .png .jpeg"
+        capture="user"
         onChange={(e) => {
           const files = e.target.files;
           if (files && files.length > 0) {
