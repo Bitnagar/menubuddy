@@ -1,11 +1,11 @@
-import MenuIcon from "./MenuIcon";
+import { UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
-    <header className="p-5 bg-gray-400 w-full h-20">
+    <header className="w-full h-[10%] p-4">
       <div className="flex w-full items-center justify-between">
-        <h1>MenuBuddy AI</h1>
-        <MenuIcon />
+        <h1 className="text-lg font-medium">MenuBuddy AI</h1>
+        <UserButton afterSignOutUrl="/" />
       </div>
     </header>
   );

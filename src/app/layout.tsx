@@ -24,17 +24,6 @@ export default function RootLayout({
         <body className={inter.className + " relative"}>
           <Header />
           {children}
-          <div
-            id="menu_overlay"
-            className="hidden w-full h-full top-0 left-0 bg-white items-center flex-col gap-2"
-          >
-            <Header />
-            <div className="w-full h-full text-center flex flex-col items-center justify-center">
-              <p>SIGN IN/UP</p>
-              <UserButton afterSignOutUrl="/" />
-              <p>ABOUT</p>
-            </div>
-          </div>
         </body>
       </html>
     </ClerkProvider>
