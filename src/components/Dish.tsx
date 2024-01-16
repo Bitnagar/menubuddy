@@ -53,6 +53,7 @@ export default function Dish({ preferences }: any) {
 
     if (data && data.length > 0) {
       let currentRateLimit = data[0].rate_limit;
+      console.log("current rate limit: ", currentRateLimit);
 
       const { data: updated_rate_limit_data } = await supabase
         .from("user")
@@ -65,6 +66,7 @@ export default function Dish({ preferences }: any) {
 
       if (updated_rate_limit_data) {
         let updated_rate_limit = updated_rate_limit_data[0].rate_limit;
+        console.log("updated rate limit: ", currentRateLimit);
         toast.success(updated_rate_limit + " request(s) remaining.");
       }
     }
