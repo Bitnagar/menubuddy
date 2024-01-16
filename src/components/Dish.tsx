@@ -44,33 +44,33 @@ export default function Dish({ preferences }: any) {
     }
   }
 
-  async function reduceRateLimit(userId: string) {
-    // fetch current rate limit value
-    const { data } = await supabase
-      .from("user")
-      .select("rate_limit")
-      .eq("clerk_id", userId);
+  // async function reduceRateLimit(userId: string) {
+  //   // fetch current rate limit value
+  //   const { data } = await supabase
+  //     .from("user")
+  //     .select("rate_limit")
+  //     .eq("clerk_id", userId);
 
-    if (data && data.length > 0) {
-      let currentRateLimit = data[0].rate_limit;
-      console.log("current rate limit: ", currentRateLimit);
+  //   if (data && data.length > 0) {
+  //     let currentRateLimit = data[0].rate_limit;
+  //     console.log("current rate limit: ", currentRateLimit);
 
-      const { data: updated_rate_limit_data } = await supabase
-        .from("user")
-        .update({
-          rate_limit: currentRateLimit - 1,
-          updated_at: `${new Date().toLocaleString()}`,
-        })
-        .eq("clerk_id", userId)
-        .select();
+  //     const { data: updated_rate_limit_data } = await supabase
+  //       .from("user")
+  //       .update({
+  //         rate_limit: currentRateLimit - 1,
+  //         updated_at: `${new Date().toLocaleString()}`,
+  //       })
+  //       .eq("clerk_id", userId)
+  //       .select();
 
-      if (updated_rate_limit_data) {
-        let updated_rate_limit = updated_rate_limit_data[0].rate_limit;
-        console.log("updated rate limit: ", currentRateLimit);
-        toast.success(updated_rate_limit + " request(s) remaining.");
-      }
-    }
-  }
+  //     if (updated_rate_limit_data) {
+  //       let updated_rate_limit = updated_rate_limit_data[0].rate_limit;
+  //       console.log("updated rate limit: ", currentRateLimit);
+  //       toast.success(updated_rate_limit + " request(s) remaining.");
+  //     }
+  //   }
+  // }
 
   async function run() {
     setIsLoading(true);
@@ -82,7 +82,7 @@ export default function Dish({ preferences }: any) {
 
     if (data && data.length > 0) {
       let currentRateLimit = data[0].rate_limit;
-
+      console.log("current rate limit: ", currentRateLimit);
       if (currentRateLimit > 0) {
         const model = genAI.getGenerativeModel({
           model: "gemini-pro-vision",
@@ -112,7 +112,23 @@ export default function Dish({ preferences }: any) {
         const text = response.text();
         setText(text);
         setIsLoading(false);
-        reduceRateLimit(user?.id!);
+        // reduceRateLimit(user?.id!);
+        const { data, error } = await supabase
+          .from("user")
+          .update({
+            rate_limit: currentRateLimit - 1,
+            updated_at: `${new Date().toISOString()}`,
+          })
+          .eq("clerk_id", user?.id)
+          .select();
+
+        if (data && error === null) {
+          let updatedLimit = data[0].rate_limit;
+          console.log("updated rate limit: ", updatedLimit);
+          toast.success(updatedLimit + " request(s) remaining.");
+        } else if (error !== null) {
+          toast.error(error.hint);
+        }
       } else {
         console.error("You have exhausted your API RATE LIMIT.");
         console.log("Current RATE LIMIT: " + currentRateLimit);
