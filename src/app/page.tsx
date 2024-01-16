@@ -1,15 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import { SignUpButton, currentUser } from "@clerk/nextjs";
+import { SignUpButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { ClerkLoading, ClerkLoaded } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const user = await currentUser();
-
-  if (user) {
-    redirect("/photo");
-  }
-
   return (
     <main className="flex flex-col items-center justify-center p-4">
       <section className="w-full min-h-screen flex flex-col gap-10 justify-center text-center">
@@ -27,14 +20,24 @@ export default async function Home() {
           </button>
         </ClerkLoading>
         <ClerkLoaded>
-          <SignUpButton
-            afterSignUpUrl="/photo"
-            afterSignInUrl="/photo"
-          >
-            <button className="w-fit bg-black text-white font-semibold p-2 rounded-md self-center">
+          <SignedOut>
+            <SignUpButton
+              afterSignUpUrl="/photo"
+              afterSignInUrl="/photo"
+            >
+              <button className="w-fit bg-black text-white font-semibold p-2 rounded-md self-center">
+                GET STARTED
+              </button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <a
+              href="/photo"
+              className="w-fit bg-black text-white font-semibold p-2 rounded-md self-center"
+            >
               GET STARTED
-            </button>
-          </SignUpButton>
+            </a>
+          </SignedIn>
         </ClerkLoaded>
       </section>
       <section className="w-full min-h-screen flex flex-col gap-10 justify-center">
@@ -56,6 +59,31 @@ export default async function Home() {
           Let AI decide what you can eat based on your preferences. Just click a
           photo of the restaurant menu, and get a dish recommended by AI.
         </p>
+        <ClerkLoading>
+          <button className="w-fit bg-black text-white font-semibold p-2 rounded-md">
+            Loading..
+          </button>
+        </ClerkLoading>
+        <ClerkLoaded>
+          <SignedOut>
+            <SignUpButton
+              afterSignUpUrl="/photo"
+              afterSignInUrl="/photo"
+            >
+              <button className="w-fit bg-black text-white font-semibold p-2 rounded-md">
+                GET STARTED
+              </button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <a
+              href="/photo"
+              className="w-fit bg-black text-white font-semibold p-2 rounded-md"
+            >
+              GET STARTED
+            </a>
+          </SignedIn>
+        </ClerkLoaded>
       </section>
     </main>
   );
