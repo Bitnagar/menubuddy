@@ -11,39 +11,36 @@ export interface Database {
     Tables: {
       user: {
         Row: {
+          allergies: string;
           clerk_id: string;
           created_at: string;
-          email: string;
-          firstname: string | null;
-          hasOnBoarded: boolean;
+          diet: string;
+          gender: string;
           id: string;
-          lastname: string | null;
-          profile_image_url: string | null;
           rate_limit: number;
+          spiciness: string;
           updated_at: string;
         };
         Insert: {
+          allergies?: string;
           clerk_id: string;
           created_at?: string;
-          email: string;
-          firstname?: string | null;
-          hasOnBoarded?: boolean;
+          diet: string;
+          gender: string;
           id?: string;
-          lastname?: string | null;
-          profile_image_url?: string | null;
           rate_limit?: number;
+          spiciness: string;
           updated_at?: string;
         };
         Update: {
+          allergies?: string;
           clerk_id?: string;
           created_at?: string;
-          email?: string;
-          firstname?: string | null;
-          hasOnBoarded?: boolean;
+          diet?: string;
+          gender?: string;
           id?: string;
-          lastname?: string | null;
-          profile_image_url?: string | null;
           rate_limit?: number;
+          spiciness?: string;
           updated_at?: string;
         };
         Relationships: [];

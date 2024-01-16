@@ -3,13 +3,13 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import supabase from "@/utils/supabase";
 
-function extractNameFromEmail(firstname: string, email: string): string {
-  if (firstname === null) {
-    return email.slice(0, email.indexOf("@"));
-  } else {
-    return firstname;
-  }
-}
+// function extractNameFromEmail(firstname: string, email: string): string {
+//   if (firstname === null) {
+//     return email.slice(0, email.indexOf("@"));
+//   } else {
+//     return firstname;
+//   }
+// }
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
@@ -59,63 +59,63 @@ export async function POST(req: Request) {
 
   const eventType = evt.type;
 
-  if (eventType === "user.created") {
-    const { email_address } = evt.data.email_addresses[0];
-    const { id, first_name, last_name, profile_image_url } = evt.data;
-    const { data, error } = await supabase
-      .from("user")
-      .insert([
-        {
-          clerk_id: id,
-          firstname: extractNameFromEmail(first_name, email_address),
-          lastname: last_name,
-          email: email_address,
-          profile_image_url: profile_image_url,
-          rate_limit: 5,
-          hasOnBoarded: false,
-        },
-      ])
-      .select();
+  //   if (eventType === "user.created") {
+  //     const { email_address } = evt.data.email_addresses[0];
+  //     const { id, first_name, last_name, profile_image_url } = evt.data;
+  //     console.log(id);
 
-    if (data === null && error !== null) {
-      return NextResponse.json({ message: error.hint }, { status: 500 });
-    }
-  }
+  //     const { data, error } = await supabase
+  //       .from("user")
+  //       .insert([
+  //         {
+  //           clerk_id: id,
+  //           firstname: extractNameFromEmail(first_name, email_address),
+  //           lastname: last_name,
+  //           email: email_address,
+  //           profile_image_url: profile_image_url,
+  //           rate_limit: 5,
+  //           hasOnBoarded: false,
+  //         },
+  //       ])
+  //       .select();
 
-  if (eventType === "user.updated") {
-    const { email_address } = evt.data.email_addresses[0];
-    const { id, first_name, last_name, profile_image_url } = evt.data;
-    const { data, error } = await supabase
-      .from("user")
-      .update({
-        firstname: extractNameFromEmail(first_name, email_address),
-        lastname: last_name,
-        email: email_address,
-        profile_image_url: profile_image_url,
-        updated_at: `${new Date().toLocaleString()}`,
-      })
-      .eq("clerk_id", id)
-      .select();
+  //     if (data === null && error !== null) {
+  //       return NextResponse.json({ message: error.hint }, { status: 500 });
+  //     }
+  //   }
 
-    if (data === null && error !== null) {
-      return NextResponse.json(
-        {
-          message: error.hint
-            ? error.hint
-            : "Error occured in updating user. Check user details.",
-        },
-        { status: 500 }
-      );
-    }
-  }
+  //   if (eventType === "user.updated") {
+  //     const { email_address } = evt.data.email_addresses[0];
+  //     const { id, first_name, last_name, profile_image_url } = evt.data;
+  //     const { data, error } = await supabase
+  //       .from("user")
+  //       .update({
+  //         firstname: extractNameFromEmail(first_name, email_address),
+  //         lastname: last_name,
+  //         email: email_address,
+  //         profile_image_url: profile_image_url,
+  //         updated_at: `${new Date().toLocaleString()}`,
+  //       })
+  //       .eq("clerk_id", id)
+  //       .select();
+
+  //     if (data === null && error !== null) {
+  //       return NextResponse.json(
+  //         {
+  //           message: error.hint
+  //             ? error.hint
+  //             : "Error occured in updating user. Check user details.",
+  //         },
+  //         { status: 500 }
+  //       );
+  //     }
+  //   }
 
   if (eventType === "user.deleted") {
-    console.log(evt);
     const { id } = evt.data;
-    const { error } = await supabase.from("user").delete().eq("clerk_id", id);
-    if (error === null) {
-      return NextResponse.json({ message: "User deleted." }, { status: 200 });
-    }
+    await supabase.from("user").delete().eq("clerk_id", id);
+    return NextResponse.json({ message: "User deleted." }, { status: 200 });
   }
+
   return NextResponse.json({ message: "Unknown Event type." }, { status: 500 });
 }
