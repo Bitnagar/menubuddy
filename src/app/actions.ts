@@ -19,8 +19,8 @@ export default async function createPreferences(formData: FormData) {
     .upsert(
       {
         clerk_id: currentClerkUser?.id,
-        created_at: `${new Date().toLocaleString()}`,
-        updated_at: `${new Date().toLocaleString()}`,
+        created_at: `${new Date().toISOString()}`,
+        updated_at: `${new Date().toISOString()}`,
         gender: rawFormData.gender,
         diet: rawFormData.diet,
         spiciness: rawFormData.spice,
