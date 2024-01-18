@@ -9,9 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "radial-gradient-purple":
+          "radial-gradient(73.49% 50% at 50% 50%, #b3b5f7 0%, #fff 100%);",
+        "radial-gradient-blue":
+          "radial-gradient(94.37% 70.95% at 53.21% 37.32%,#b2d5ff 0%,#fff 87.7%)",
+        "radial-gradient-yellow":
+          "radial-gradient(49.13% 70.71% at 50% 50%, #eaffd5 0%, #fff 100%);",
+      },
+
+      colors: {
+        primary: {
+          purple: "#7478DA",
+          yellow: "#C6D23F",
+        },
+      },
+
+      boxShadow: {
+        button: "0px 2px 1.6px -1px rgba(0, 0, 0, 0.75);",
       },
     },
 
