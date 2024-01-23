@@ -8,8 +8,20 @@ import supabase from "@/utils/supabase";
 import { useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
 import LRingResize from "./loaders/LRingResizeWhite";
+import OutputDrawer from "./OutputDrawer";
 
-export default function Dish({ preferences }: any) {
+export default function Dish({
+  preferences,
+}: {
+  preferences: [
+    {
+      gender: string;
+      diet: string;
+      spiciness: string;
+      allergies: string;
+    }
+  ];
+}) {
   const { user } = useUser();
   const [rawImage, setRawImage] = useState<File>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -56,7 +68,7 @@ export default function Dish({ preferences }: any) {
 
     if (data && error === null) {
       let updatedLimit = data[0].rate_limit;
-      console.log("updated rate limit: ", updatedLimit);
+      console.warn("updated rate limit: ", updatedLimit);
       toast.success(updatedLimit + " request(s) remaining.");
     } else if (error !== null) {
       toast.error(error.hint);
@@ -74,7 +86,7 @@ export default function Dish({ preferences }: any) {
     if (data && data.length > 0) {
       let currentRateLimit = data[0].rate_limit;
       console.log("current rate limit: ", currentRateLimit);
-      if (currentRateLimit > 0) {
+      if (currentRateLimit && currentRateLimit > 0) {
         const model = genAI.getGenerativeModel({
           model: "gemini-pro-vision",
           generationConfig: {
@@ -102,6 +114,7 @@ export default function Dish({ preferences }: any) {
         const response = result.response;
         const text = response.text();
         setText(text);
+        document.getElementById("drawer")?.click();
         setIsLoading(false);
         reduceRateLimit(currentRateLimit, user?.id!);
       } else {
@@ -124,125 +137,119 @@ export default function Dish({ preferences }: any) {
   }
 
   return (
-    <main className="w-full h-full flex items-center justify-center p-6">
-      <div className="text-center flex flex-col gap-10 justify-center">
-        {!rawImage && (
-          <>
-            <div className="flex flex-col justify-evenly">
-              <h2 className="font-bold text-xl">
-                You can take a photo of the restaurant menu.
-              </h2>
-              <h2 className="font-bold">OR</h2>
-              <h2 className="font-bold text-xl">
-                You can choose a photo from your files
-              </h2>
-              <h2 className="font-normal text-sm">
-                (Enable camera access for browser)
-              </h2>
-            </div>
-            <div className="flex flex-col gap-2 self-center">
-              <input
-                type="file"
-                name="photo"
-                accept=".jpg, .jpeg, .png"
-                capture="user"
-                className="w-fit bg-black text-white font-semibold p-2 rounded-md self-center"
-                onChange={(e) => {
-                  const files = e.target.files;
-                  if (files && files.length > 0) {
-                    const file = files[0];
-                    parseImageFile(file);
-                  }
-                }}
+    <>
+      {!rawImage && (
+        <div className="flex flex-col items-center justify-center gap-10 mt-52 ">
+          <button
+            onClick={() => {
+              document.getElementById("file")?.click();
+            }}
+            className="w-[90px] h-[90px] flex items-center justify-center rounded-xl bg-custom-addFileWhite shadow-button"
+          >
+            <img
+              src={"assets/images.svg"}
+              alt="add photo"
+              width={25}
+              height={25}
+            />
+          </button>
+          <input
+            id="file"
+            type="file"
+            name="photo"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => {
+              const files = e.target.files;
+              if (files && files.length > 0) {
+                const file = files[0];
+                parseImageFile(file);
+              }
+            }}
+          />
+          <div className="h-fit text-center font-medium xl:text-xl">
+            <p>Click or select a picture of the menu.</p>
+            <p className="text-sm text-gray-500 mt-2 xl:text-base">
+              (*enable camera permission for browser)
+            </p>
+            <a
+              href="/preferences"
+              className="font-normal text-sm underline"
+            >
+              Edit preferences
+            </a>
+          </div>
+        </div>
+      )}
+      {rawImage && (
+        <>
+          {!imageData.data && (
+            <p className="mt-44 md:mt-36 lg:mt-32 2xl:mt-24">
+              Loading image...
+            </p>
+          )}
+          {imageData.data && (
+            <>
+              <img
+                src={imageData.data}
+                alt="photo of a menu"
+                className="self-center sm:w-80 md:w-96 lg:w-[450px] 2xl:w-5/12 rounded-md mt-32 md:mt-36 lg:mt-32 2xl:mt-24"
               />
-              <a
-                href="/preferences"
-                className="font-normal text-sm underline mt-4"
+            </>
+          )}
+          <input
+            type="file"
+            name="photo"
+            style={{ display: "none" }}
+            accept="image/*"
+            id="file"
+            className="w-fit bg-black text-white font-semibold p-2 rounded-md self-center"
+            onChange={(e) => {
+              const files = e.target.files;
+              if (files && files.length > 0) {
+                const file = files[0];
+                parseImageFile(file);
+              }
+            }}
+          />
+          <div className="flex flex-col items-center justify-center mb-[10rem] ">
+            <div className="flex items-center justify-center gap-4">
+              <button
+                id="import-dialog"
+                className="w-fit 2xl:w-44 flex justify-center items-center gap-2 bg-primary-purple hover:bg-hover-purple active:bg-primary-purple transition text-white shadow-button font-semibold p-2 rounded-md self-center"
+                onClick={handleSubmit}
+                disabled={isLoading}
               >
-                Edit preferences
-              </a>
-            </div>
-          </>
-        )}
-        {rawImage && (
-          <>
-            <div className="w-fit flex flex-col gap-10 self-center items-center">
-              {!imageData.data && <p>Loading image...</p>}
-              {imageData.data && (
-                <img
-                  src={imageData.data}
-                  alt="photo of a menu"
-                  width={300}
-                  height={150}
-                  className="self-center"
-                />
-              )}
-              <input
-                type="file"
-                name="photo"
-                style={{ display: "none" }}
-                accept=".jpg, .jpeg, .png"
-                capture="user"
-                id="file"
-                className="w-fit bg-black text-white font-semibold p-2 rounded-md self-center"
-                onChange={(e) => {
-                  const files = e.target.files;
-                  if (files && files.length > 0) {
-                    const file = files[0];
-                    parseImageFile(file);
-                  }
+                {isLoading && <LRingResize />}
+                {isLoading ? "Please wait..." : "Get a dish 🍝"}
+              </button>
+              <button
+                id="import-dialog"
+                className="w-fit 2xl:w-44 flex items-center justify-center gap-2 bg-black text-white shadow button font-semibold p-2 rounded-md self-center"
+                onClick={() => {
+                  document.getElementById("file")?.click();
                 }}
-              />
-              <div className="flex flex-col items-center justify-center">
-                <div className="flex items-center justify-center gap-4">
-                  <button
-                    id="import-dialog"
-                    className="w-fit flex items-center gap-2 bg-pink-700 text-white font-semibold p-2 rounded-md self-center"
-                    onClick={handleSubmit}
-                    disabled={isLoading}
-                  >
-                    {!isLoading && (
-                      <img
-                        src={"/assets/dish-icon.svg"}
-                        alt="dish icon"
-                        width={20}
-                        height={20}
-                      />
-                    )}
-                    {isLoading && <LRingResize />}
-                    {isLoading ? "Please wait..." : "Get a dish"}
-                  </button>
-                  <button
-                    id="import-dialog"
-                    className="w-fit flex items-center gap-2 bg-black text-white font-semibold p-2 rounded-md self-center"
-                    onClick={() => {
-                      document.getElementById("file")?.click();
-                    }}
-                    disabled={isLoading}
-                  >
-                    <img
-                      src={"/assets/camera.svg"}
-                      alt="dish icon"
-                      width={20}
-                      height={20}
-                    />
-                    Retake photo
-                  </button>
-                </div>
-                <a
-                  href="/preferences"
-                  className="block font-normal text-sm underline mt-4"
-                >
-                  Edit preferences
-                </a>
-              </div>
-              <pre className="text-sm font-medium text-left text-wrap">
-                {text}
-              </pre>
+                disabled={isLoading}
+              >
+                <img
+                  src={"/assets/camera.svg"}
+                  alt="dish icon"
+                  width={20}
+                  height={20}
+                />
+                Retake photo
+              </button>
             </div>
-          </>
-        )}
-      </div>
-    </main>
+            <a
+              href="/preferences"
+              className="block font-normal text-sm underline mt-4"
+            >
+              Edit preferences
+            </a>
+          </div>
+          <OutputDrawer text={text} />
+        </>
+      )}
+    </>
   );
 }

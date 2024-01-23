@@ -4,9 +4,9 @@ import { ClerkLoading, ClerkLoaded } from "@clerk/nextjs";
 
 export default async function Home() {
   return (
-    <main className="flex flex-col items-center justify-center">
+    <>
       <section className="bg-radial-gradient-purple w-full min-h-screen flex flex-col gap-10 justify-center text-center p-4">
-        <div className="flex flex-col gap-10 mb-10">
+        <div className="flex flex-col gap-10 sm:mb-16 xl:mb-10">
           <h1 className="text-3xl font-bold lg:text-4xl xl:text-5xl">
             84% of Gen Z’s suffer from menu anxiety.
           </h1>
@@ -14,7 +14,7 @@ export default async function Home() {
             MenuBuddy AI is here to help them.
           </h2>
           <ClerkLoading>
-            <button className="shadow-button w-fit bg-primary-purple text-white font-semibold px-4 py-3 rounded-xl self-center">
+            <button className="shadow-button w-fit bg-primary-purple hover:bg-hover-purple active:bg-primary-purple transition text-white font-semibold px-4 py-3 rounded-xl self-center">
               Loading..
             </button>
           </ClerkLoading>
@@ -24,7 +24,7 @@ export default async function Home() {
                 afterSignUpUrl="/photo"
                 afterSignInUrl="/photo"
               >
-                <button className="shadow-button w-fit bg-primary-purple text-white font-semibold px-4 py-3 rounded-xl self-center">
+                <button className="shadow-button w-fit bg-primary-purple hover:bg-hover-purple active:bg-primary-purple transition text-white font-semibold px-4 py-3 rounded-xl self-center">
                   GET STARTED
                 </button>
               </SignUpButton>
@@ -32,7 +32,7 @@ export default async function Home() {
             <SignedIn>
               <a
                 href="/photo"
-                className="w-fit shadow-button bg-primary-purple text-white font-semibold px-4 py-3 rounded-xl self-center"
+                className="w-fit shadow-button bg-primary-purple hover:bg-hover-purple active:bg-primary-purple transition text-white font-semibold px-4 py-3 rounded-xl self-center"
               >
                 GET STARTED
               </a>
@@ -69,7 +69,7 @@ export default async function Home() {
           </p>
         </div>
         <ClerkLoading>
-          <button className="shadow-button w-fit bg-primary-yellow text-white font-semibold px-4 py-3 rounded-xl self-center">
+          <button className="shadow-button w-fit bg-primary-yellow hover:bg-hover-yellow active:bg-primary-yellow transition text-white font-semibold px-4 py-3 rounded-xl self-center">
             Loading..
           </button>
         </ClerkLoading>
@@ -79,7 +79,7 @@ export default async function Home() {
               afterSignUpUrl="/photo"
               afterSignInUrl="/photo"
             >
-              <button className="shadow-button w-fit bg-primary-yellow text-white font-semibold px-4 py-3 rounded-xl self-center">
+              <button className="shadow-button w-fit bg-primary-yellow hover:bg-hover-yellow active:bg-primary-yellow transition text-white font-semibold px-4 py-3 rounded-xl self-center">
                 GET STARTED
               </button>
             </SignUpButton>
@@ -87,13 +87,13 @@ export default async function Home() {
           <SignedIn>
             <a
               href="/photo"
-              className="w-fit shadow-button bg-primary-yellow text-white font-semibold px-4 py-3 rounded-xl self-center"
+              className="w-fit shadow-button bg-primary-yellow hover:bg-hover-yellow active:bg-primary-yellow transition text-white font-semibold px-4 py-3 rounded-xl self-center"
             >
               GET STARTED
             </a>
           </SignedIn>
         </ClerkLoaded>
       </section>
-    </main>
+    </>
   );
 }

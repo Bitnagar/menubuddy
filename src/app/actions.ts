@@ -14,7 +14,7 @@ export default async function createPreferences(formData: FormData) {
     allergies: formData.get("allergies"),
   };
 
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("user")
     .upsert(
       {
@@ -33,6 +33,6 @@ export default async function createPreferences(formData: FormData) {
   if (data && data.length > 0) {
     redirect("/photo");
   } else {
-    redirect("/preferences");
+    return error?.hint;
   }
 }

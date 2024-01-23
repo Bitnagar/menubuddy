@@ -8,18 +8,19 @@ export default async function Page() {
   const { userId } = auth();
 
   if (userId) {
-    let { data } = await supabase
+    let { data }: { data: any } = await supabase
       .from("user")
       .select("*")
-      .eq("clerk_id", userId);
+      .eq("clerk_id", userId)
+      .select();
 
     if (data && data.length === 0) {
       redirect("/preferences");
     } else {
       return (
-        <div className="min-h-[90%] flex items-center justify-center">
+        <section className="w-full min-h-min flex flex-col justify-center items-center gap-6 p-4">
           <Dish preferences={data} />
-        </div>
+        </section>
       );
     }
   }
