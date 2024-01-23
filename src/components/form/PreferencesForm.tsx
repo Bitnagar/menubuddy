@@ -7,15 +7,15 @@ export default function PreferencesForm({ firstname }: any) {
   "use client";
   return (
     <div className="flex flex-col w-full xl:w-1/2 xl:self-center xl:m-auto min-h-[90%] items-center xl:items-start justify-center p-4 gap-4">
-      <div>
+      <div className="flex flex-col gap-2">
         <h1 className="font-semibold text-2xl">
           Save your dietary preferences, {firstname}!
         </h1>
-        <p className="text-base">
+        <p className="text-lg">
           We need these so as to recommend you a perfect dish from the menu.😋
         </p>
       </div>
-      <div className="relative w-full h-fit flex flex-col items-center justify-center mt-5">
+      <div className="relative w-full h-fit flex flex-col items-center justify-center mt-2">
         <form
           className="w-full h-fit flex flex-col gap-8"
           action={createPreferences}
@@ -148,7 +148,7 @@ export default function PreferencesForm({ firstname }: any) {
               className="font-semibold sm:text-lg xl:text-xl"
               htmlFor="allergies"
             >
-              Do you have any allergies?
+              <h1>Do you have any allergies?</h1>
             </label>
             <textarea
               id="allergies"

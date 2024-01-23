@@ -10,7 +10,7 @@ export default async function Home() {
           <h1 className="text-3xl font-bold lg:text-4xl xl:text-5xl">
             84% of Gen Z’s suffer from menu anxiety.
           </h1>
-          <h2 className="font-medium text-lg">
+          <h2 className="font-medium text-xl xl:text-2xl">
             MenuBuddy AI is here to help them.
           </h2>
           <ClerkLoading>

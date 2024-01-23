@@ -167,9 +167,11 @@ export default function Dish({
               }
             }}
           />
-          <div className="h-fit text-center font-medium xl:text-xl">
-            <p>Click or select a picture of the menu.</p>
-            <p className="text-sm text-gray-500 mt-2 xl:text-base">
+          <div className="h-fit text-center">
+            <p className="font-medium text-xl xl:text-2xl">
+              Click or select a picture of the menu.
+            </p>
+            <p className="text-sm text-gray-500 mt-2 xl:text-lg">
               (*enable camera permission for browser)
             </p>
             <a
@@ -183,11 +185,7 @@ export default function Dish({
       )}
       {rawImage && (
         <>
-          {!imageData.data && (
-            <p className="mt-44 md:mt-36 lg:mt-32 2xl:mt-24">
-              Loading image...
-            </p>
-          )}
+          {!imageData.data && <p className="mt-[15rem]">Loading image...</p>}
           {imageData.data && (
             <>
               <img
