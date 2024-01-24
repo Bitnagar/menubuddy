@@ -81,10 +81,9 @@ export default function Page({}: Props) {
                 I don't see an option to take a picture!?
               </AccordionTrigger>
               <AccordionContent>
-                Please make sure that your browser must have{" "}
-                <strong>camera</strong> and <strong>files</strong> access
-                permission enabled. <strong>Samsung</strong> users may not see
-                an option because of the restrictions in the OS. If you are a
+                Please make sure you have enabled camera access permission for
+                the browser. <strong>Samsung</strong> users may not see an
+                option because of the restrictions in the OS. If you are a
                 samsung user, please click a picture of a menu separately using
                 in-built camera and then select it in the web app.
               </AccordionContent>
@@ -99,6 +98,24 @@ export default function Page({}: Props) {
                 not yet polished for production use. We appreciate your
                 patience, and in future releases, improvements are expected.
                 Kindly ensure to provide only the picture of the menu.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger className="font-fraunces 2xl:text-xl">
+                All of my requests are exhausted! What to do now?
+              </AccordionTrigger>
+              <AccordionContent>
+                Firstly, thanks for being our user. We appreciate it. Because
+                the app is still in beta, we can only give each user a total of
+                5 requests. If you have exhausted all your requests, you can
+                request me to increase it by contacting me on my twitter{" "}
+                <a
+                  className="underline"
+                  href="https://twitter.com/bitnagar"
+                >
+                  @bitnagar
+                </a>
+                .
               </AccordionContent>
             </AccordionItem>
           </Accordion>
