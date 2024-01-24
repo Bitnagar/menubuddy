@@ -18,7 +18,7 @@ export default async function Page() {
       redirect("/preferences");
     } else {
       return (
-        <section className="w-full min-h-min flex flex-col justify-center items-center gap-6 p-4">
+        <section className="w-full min-h-min flex flex-col grow justify-center items-center gap-6 p-4">
           <Dish preferences={data} />
         </section>
       );

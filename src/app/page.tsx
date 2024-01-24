@@ -14,7 +14,7 @@ export default async function Home() {
             MenuBuddy AI is here to help them.
           </h2>
           <ClerkLoading>
-            <button className="shadow-button w-fit bg-primary-purple hover:bg-hover-purple active:bg-primary-purple transition text-white font-semibold px-4 py-3 rounded-xl self-center">
+            <button className="shadow-button w-fit bg-primary-purple  active:bg-primary-purple transition text-white font-semibold px-4 py-3 rounded-xl self-center">
               Loading..
             </button>
           </ClerkLoading>
@@ -24,7 +24,7 @@ export default async function Home() {
                 afterSignUpUrl="/photo"
                 afterSignInUrl="/photo"
               >
-                <button className="shadow-button w-fit bg-primary-purple hover:bg-hover-purple active:bg-primary-purple transition text-white font-semibold px-4 py-3 rounded-xl self-center">
+                <button className="shadow-button w-fit bg-primary-purple hover:bg-[#8084E2] active:bg-primary-purple transition text-white font-semibold px-4 py-3 rounded-xl self-center">
                   GET STARTED
                 </button>
               </SignUpButton>
@@ -32,7 +32,7 @@ export default async function Home() {
             <SignedIn>
               <a
                 href="/photo"
-                className="w-fit shadow-button bg-primary-purple hover:bg-hover-purple active:bg-primary-purple transition text-white font-semibold px-4 py-3 rounded-xl self-center"
+                className="w-fit shadow-button bg-primary-purple hover:bg-primary-hover_purple active:bg-primary-purple transition text-white font-semibold px-4 py-3 rounded-xl self-center"
               >
                 GET STARTED
               </a>
@@ -69,7 +69,7 @@ export default async function Home() {
           </p>
         </div>
         <ClerkLoading>
-          <button className="shadow-button w-fit bg-primary-yellow hover:bg-hover-yellow active:bg-primary-yellow transition text-white font-semibold px-4 py-3 rounded-xl self-center">
+          <button className="shadow-button w-fit bg-primary-yellow hover:bg-primary-hover_yellow active:bg-primary-yellow transition text-white font-semibold px-4 py-3 rounded-xl self-center">
             Loading..
           </button>
         </ClerkLoading>
@@ -79,7 +79,7 @@ export default async function Home() {
               afterSignUpUrl="/photo"
               afterSignInUrl="/photo"
             >
-              <button className="shadow-button w-fit bg-primary-yellow hover:bg-hover-yellow active:bg-primary-yellow transition text-white font-semibold px-4 py-3 rounded-xl self-center">
+              <button className="shadow-button w-fit bg-primary-yellow hover:bg-primary-hover_yellow active:bg-primary-yellow transition text-white font-semibold px-4 py-3 rounded-xl self-center">
                 GET STARTED
               </button>
             </SignUpButton>
@@ -87,7 +87,7 @@ export default async function Home() {
           <SignedIn>
             <a
               href="/photo"
-              className="w-fit shadow-button bg-primary-yellow hover:bg-hover-yellow active:bg-primary-yellow transition text-white font-semibold px-4 py-3 rounded-xl self-center"
+              className="w-fit shadow-button bg-primary-yellow hover:bg-primary-hover_yellow active:bg-primary-yellow transition text-white font-semibold px-4 py-3 rounded-xl self-center"
             >
               GET STARTED
             </a>

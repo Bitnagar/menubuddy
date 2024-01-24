@@ -36,6 +36,8 @@ const config = {
           foreground: "hsl(var(--primary-foreground))",
           purple: "#7478DA",
           yellow: "#C6D23F",
+          hover_purple: "#8084E2",
+          hover_yellow: "#CAD82E",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -94,6 +96,10 @@ const config = {
       },
       boxShadow: {
         button: "0px 2px 1.6px -1px rgba(0, 0, 0, 0.75);",
+      },
+
+      fontFamily: {
+        fraunces: ["Fraunces", "Serif"],
       },
     },
   },
