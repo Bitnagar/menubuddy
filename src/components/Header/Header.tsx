@@ -7,7 +7,7 @@ export default function Header() {
         <a href="/">MenuBuddy AI</a>
         <div className="flex gap-8 items-center justify-center">
           <a href="/photo">Home</a>
-          <a href="#">About</a>
+          <a href="/about">About</a>
           <UserButton afterSignOutUrl="/" />
         </div>
       </div>

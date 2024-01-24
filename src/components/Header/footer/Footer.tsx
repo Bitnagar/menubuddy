@@ -1,0 +1,20 @@
+export default function Footer() {
+  const date = new Date();
+  let year = date.getFullYear();
+  return (
+    <footer className="w-full flex items-center justify-center">
+      <div>
+        <span className="text-sm">
+          Made with 💖. A project of{" "}
+          <a
+            className="underline"
+            href="https://twitter.com/bitnagar"
+          >
+            @bitnagar
+          </a>
+          . © {year}.
+        </span>
+      </div>
+    </footer>
+  );
+}

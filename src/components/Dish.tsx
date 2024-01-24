@@ -139,7 +139,7 @@ export default function Dish({
   return (
     <>
       {!rawImage && (
-        <div className="flex flex-col items-center justify-center gap-10 mt-52 ">
+        <div className="flex flex-col items-center justify-center gap-10">
           <button
             onClick={() => {
               document.getElementById("file")?.click();
@@ -191,7 +191,7 @@ export default function Dish({
               <img
                 src={imageData.data}
                 alt="photo of a menu"
-                className="self-center sm:w-80 md:w-96 lg:w-[450px] 2xl:w-5/12 rounded-md mt-32 md:mt-36 lg:mt-32 2xl:mt-24"
+                className="self-center sm:w-80 md:w-96 lg:w-[450px] 2xl:w-5/12 rounded-md mt-[6rem]"
               />
             </>
           )}
@@ -210,7 +210,7 @@ export default function Dish({
               }
             }}
           />
-          <div className="flex flex-col items-center justify-center mb-[10rem] ">
+          <div className="flex flex-col items-center justify-center mb-[6rem]">
             <div className="flex items-center justify-center gap-4">
               <button
                 id="import-dialog"

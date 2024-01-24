@@ -4,6 +4,7 @@ import "@/app/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header/Header";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/components/Header/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +21,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={inter.className + " relative bg-radial-gradient-purple"}
-        >
+        <body className={inter.className + " bg-radial-gradient-purple"}>
           <Header />
-          <main className="w-full">{children}</main>
+          <main className="w-full flex flex-col grow">{children}</main>
+          <Footer />
           <Toaster
             position="bottom-center"
             reverseOrder={false}
