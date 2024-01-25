@@ -5,14 +5,13 @@ export default function Footer() {
     <footer className="w-full flex items-center justify-center">
       <div>
         <span className="text-sm">
-          Made with 💖. A project of{" "}
           <a
             className="underline"
             href="https://twitter.com/bitnagar"
           >
-            @bitnagar
+            bitnagar{" "}
           </a>
-          . © {year}.
+          © {year}
         </span>
       </div>
     </footer>
