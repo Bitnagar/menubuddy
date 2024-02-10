@@ -1,5 +1,5 @@
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-export default function OutputDrawer({ text }: { text: string }) {
+export default function OutputDrawer({ text }: { text: string | undefined }) {
   return (
     <Drawer>
       <DrawerTrigger
