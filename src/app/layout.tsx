@@ -4,7 +4,7 @@ import "@/app/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header/Header";
 import { Toaster } from "react-hot-toast";
-import Footer from "@/components/Header/footer/Footer";
+import Footer from "@/components/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
