@@ -1,12 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { generateDish } from "@/app/actions";
 import { getImageBase64 } from "@/utils/utils";
 import LRingResize from "./loaders/LRingResizeWhite";
 import OutputDrawer from "./OutputDrawer";
 import { useFormState, useFormStatus } from "react-dom";
+import toast from "react-hot-toast";
 
 export default function Dish({
   preferences,
@@ -27,8 +28,13 @@ export default function Dish({
 
   const [state, formAction] = useFormState(generateDish, null);
 
-  useEffect(() => {
-    document.getElementById("drawer")?.click();
+  useLayoutEffect(() => {
+    if (state?.error) {
+      toast.error(state?.error);
+    }
+    if (state?.message) {
+      document.getElementById("drawer")?.click();
+    }
   }, [state]);
 
   async function parseImageFile(file: File) {
@@ -64,6 +70,12 @@ export default function Dish({
             <p className="text-sm text-gray-500 mt-2 xl:text-lg">
               (*enable camera permission for browser)
             </p>
+            <a
+              href="/preferences"
+              className="font-normal text-sm underline"
+            >
+              Edit preferences
+            </a>
           </div>
         </div>
       )}
@@ -82,12 +94,18 @@ export default function Dish({
             </>
           )}
           <div className="flex flex-col items-center justify-center mb-[6rem]">
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-4 mb-5">
               <SubmitButton />
               <RetakeButton />
             </div>
+            <a
+              href="/preferences"
+              className="font-normal text-sm underline"
+            >
+              Edit preferences
+            </a>
           </div>
-          {<OutputDrawer text={state} />}
+          {<OutputDrawer text={state?.message} />}
         </>
       )}
       <input

@@ -98,7 +98,6 @@ export async function generateDish(
 
     if (data && data.length > 0) {
       let currentApiCallsCount = data[0].rate_limit;
-      console.log("current rate limit: ", currentApiCallsCount);
       if (currentApiCallsCount && currentApiCallsCount > 0) {
         const model = genAI.getGenerativeModel({
           model: "gemini-pro-vision",
@@ -130,10 +129,16 @@ export async function generateDish(
         return {
           message: text,
         };
+      } else {
+        return {
+          error:
+            "You have exhausted all your API credits. Contact the project creator.",
+        };
       }
     }
+    return { error: "User Data Not Found" };
   }
 
   const textObject = await run();
-  return textObject?.message;
+  return textObject;
 }
