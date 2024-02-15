@@ -2,7 +2,7 @@ export default function Footer() {
   const date = new Date();
   let year = date.getFullYear();
   return (
-    <footer className="w-full flex items-center justify-center">
+    <footer className="w-full flex items-center justify-center font-fraunces">
       <div>
         <span className="text-sm">
           <a

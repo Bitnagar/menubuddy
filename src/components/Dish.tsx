@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { generateDish } from "@/app/actions";
 import { getImageBase64 } from "@/utils/utils";
 import LRingResize from "./loaders/LRingResizeWhite";
@@ -28,6 +28,11 @@ export default function Dish({
 
   const [state, formAction] = useFormState(generateDish, null);
 
+  async function parseImageFile(file: File) {
+    const image = await getImageBase64(file);
+    setParsedImage(image);
+  }
+
   useLayoutEffect(() => {
     if (state?.error) {
       toast.error(state?.error);
@@ -37,19 +42,15 @@ export default function Dish({
     }
   }, [state]);
 
-  async function parseImageFile(file: File) {
-    const image = await getImageBase64(file);
-    setParsedImage(image);
-  }
-
   return (
     <form
       action={formAction}
-      className="flex flex-col"
+      className="w-full h-full flex flex-col 2xl:flex-row items-center justify-evenly gap-10 2xl:gap-20"
     >
       {!parsedImageObject.data && (
         <div className="flex flex-col items-center justify-center gap-10">
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               document.getElementById("file")?.click();
@@ -85,16 +86,16 @@ export default function Dish({
             <p className="mt-[15rem]">Loading image...</p>
           )}
           {parsedImageObject.data && (
-            <>
+            <div className="w-80 md:w-96 xl:w-[40%] mt-16 2xl:mt-0 drop-shadow-2xl">
               <img
                 src={parsedImageObject.data}
                 alt="photo of a menu"
-                className="self-center sm:w-80 md:w-96 lg:w-[450px] 2xl:w-5/12 rounded-md my-16"
+                className="w-fit self-center rounded-md"
               />
-            </>
+            </div>
           )}
-          <div className="flex flex-col items-center justify-center mb-[6rem]">
-            <div className="flex items-center justify-center gap-4 mb-5">
+          <div className="flex flex-col items-center justify-center mb-[6rem] 2xl:mb-0 drop-shadow-2xl">
+            <div className="flex 2xl:flex-col 2xl:w-full items-center justify-center gap-4 mb-5">
               <SubmitButton />
               <RetakeButton />
             </div>
@@ -109,6 +110,7 @@ export default function Dish({
         </>
       )}
       <input
+        title="file"
         id="file"
         type="file"
         name="filelist_raw_data_img"
@@ -124,37 +126,37 @@ export default function Dish({
         }}
       />
       <input
-        type="text"
+        type="hidden"
         name="user_base64_menu_img"
         className="hidden"
         defaultValue={parsedImageObject.data}
       />
       <input
-        type="text"
+        type="hidden"
         name="user_base64_menu_img_type"
         className="hidden"
         defaultValue={parsedImageObject.type}
       />
       <input
-        type="text"
+        type="hidden"
         name="diet"
         defaultValue={preferences[0].diet}
         className="hidden"
       />
       <input
-        type="text"
+        type="hidden"
         name="gender"
         defaultValue={preferences[0].gender}
         className="hidden"
       />
       <input
-        type="text"
+        type="hidden"
         name="spiciness"
         defaultValue={preferences[0].spiciness}
         className="hidden"
       />
       <input
-        type="text"
+        type="hidden"
         name="allergies"
         defaultValue={preferences[0].allergies}
         className="hidden"
@@ -170,7 +172,7 @@ function SubmitButton() {
     <button
       type="submit"
       className="w-fit 2xl:w-44 flex justify-center items-center gap-2 bg-primary-purple hover:bg-hover-purple active:bg-primary-purple transition text-white shadow-button font-semibold p-2 rounded-md self-center"
-      // disabled={isLoading}
+      disabled={pending}
     >
       {pending && <LRingResize />}
       {pending ? "Please wait..." : "Get a dish 🍝"}

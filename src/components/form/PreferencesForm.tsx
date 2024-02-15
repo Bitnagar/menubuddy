@@ -45,6 +45,7 @@ export default function PreferencesForm({ firstname }: any) {
                 Female
               </label>
               <input
+                title="female"
                 type="radio"
                 name="gender"
                 value={"female"}
@@ -63,6 +64,7 @@ export default function PreferencesForm({ firstname }: any) {
                 Vegetarian without eggs
               </label>
               <input
+                title="vegetarian without eggs"
                 type="radio"
                 name="diet"
                 value={"vegetarian without eggs"}
@@ -91,6 +93,7 @@ export default function PreferencesForm({ firstname }: any) {
                 Non-vegetarian
               </label>
               <input
+                title="non-vegetarian"
                 type="radio"
                 name="diet"
                 value={"non-vegetarian"}
@@ -124,6 +127,7 @@ export default function PreferencesForm({ firstname }: any) {
                 Medium spicy
               </label>
               <input
+                title="spice"
                 type="radio"
                 name="spice"
                 value={"medium"}
@@ -137,6 +141,7 @@ export default function PreferencesForm({ firstname }: any) {
                 Extra spicy
               </label>
               <input
+                title="extra"
                 type="radio"
                 name="spice"
                 value={"extra"}
@@ -174,7 +179,7 @@ function SubmitButton() {
         `${pending ? `bg-gray-700` : `bg-black`}`
       }
       type="submit"
-      aria-disabled={pending}
+      disabled={pending}
     >
       {pending && <LRingResizeWhite />}
       {pending ? "Saving" : "Save and Continue -->"}
