@@ -1,4 +1,4 @@
-async function getImageBase64(image: File): Promise<any> {
+export async function getImageBase64(image: File): Promise<any> {
   const fr = new FileReader();
   fr.readAsDataURL(image);
   const promise = new Promise((resolve, reject) => {
@@ -10,5 +10,3 @@ async function getImageBase64(image: File): Promise<any> {
   });
   return promise;
 }
-
-export { getImageBase64 };

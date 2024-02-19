@@ -3,11 +3,12 @@
 
 import { useLayoutEffect, useState } from "react";
 import { generateDish } from "@/app/actions";
-import { getImageBase64 } from "@/utils/utils";
+import { getImageBase64 } from "@/helpers/client";
 import LRingResize from "./loaders/LRingResizeWhite";
 import OutputDrawer from "./OutputDrawer";
 import { useFormState, useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
+import { GetDishFormStateType } from "@/types/shared.types";
 
 export default function Dish({
   preferences,
@@ -26,7 +27,12 @@ export default function Dish({
     type: "",
   });
 
-  const [state, formAction] = useFormState(generateDish, null);
+  const initialState: GetDishFormStateType = {
+    success: null,
+    error: null,
+  };
+
+  const [state, formAction] = useFormState(generateDish, initialState);
 
   async function parseImageFile(file: File) {
     const image = await getImageBase64(file);
@@ -34,10 +40,10 @@ export default function Dish({
   }
 
   useLayoutEffect(() => {
-    if (state?.error) {
-      toast.error(state?.error);
+    if (state.error) {
+      toast.error(state.error);
     }
-    if (state?.message) {
+    if (state.success) {
       document.getElementById("drawer")?.click();
     }
   }, [state]);
@@ -106,7 +112,7 @@ export default function Dish({
               Edit preferences
             </a>
           </div>
-          {<OutputDrawer text={state?.message} />}
+          {<OutputDrawer text={state.success} />}
         </>
       )}
       <input

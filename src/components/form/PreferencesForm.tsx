@@ -1,10 +1,24 @@
 "use client";
 import createPreferences from "@/app/actions";
 import LRingResizeWhite from "../loaders/LRingResizeWhite";
-import { useFormStatus } from "react-dom";
+import { useFormStatus, useFormState } from "react-dom";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import { PreferencesFormStateType } from "@/types/shared.types";
 
-export default function PreferencesForm({ firstname }: any) {
-  "use client";
+export default function PreferencesForm({ firstname }: { firstname: string }) {
+  const initialState: PreferencesFormStateType = {
+    success: null,
+    error: null,
+  };
+  const [state, formAction] = useFormState(createPreferences, initialState);
+
+  useEffect(() => {
+    if (state.success) {
+      redirect("/photo");
+    }
+  }, [state]);
+
   return (
     <div className="flex flex-col w-full xl:w-1/2 xl:self-center xl:m-auto min-h-[90%] items-center xl:items-start justify-center p-4 gap-4">
       <div className="flex flex-col gap-2">
@@ -17,8 +31,8 @@ export default function PreferencesForm({ firstname }: any) {
       </div>
       <div className="relative w-full h-fit flex flex-col items-center justify-center mt-2">
         <form
-          className="w-full h-fit flex flex-col gap-8"
-          action={createPreferences}
+          className="w-full h-fit flex flex-col gap-8 [&>div>div>input]:cursor-pointer"
+          action={formAction}
         >
           <div>
             <h1 className="font-semibold sm:text-lg xl:text-xl">
@@ -27,24 +41,26 @@ export default function PreferencesForm({ firstname }: any) {
             <div className="flex gap-3 items-center">
               <label
                 className="sm:text-sm xl:text-base"
-                htmlFor="gender"
+                htmlFor="male"
               >
                 Male
               </label>
               <input
-                id="gender"
+                id="male"
                 type="radio"
                 name="gender"
                 value={"male"}
+                title="male"
                 required
               />
               <label
                 className="sm:text-sm xl:text-base"
-                htmlFor="gender"
+                htmlFor="female"
               >
                 Female
               </label>
               <input
+                id="female"
                 title="female"
                 type="radio"
                 name="gender"
@@ -59,11 +75,12 @@ export default function PreferencesForm({ firstname }: any) {
             <div className="flex gap-3 items-center">
               <label
                 className="sm:text-sm xl:text-base"
-                htmlFor="diet"
+                htmlFor="vegetarian_without_eggs"
               >
                 Vegetarian without eggs
               </label>
               <input
+                id="vegetarian_without_eggs"
                 title="vegetarian without eggs"
                 type="radio"
                 name="diet"
@@ -74,25 +91,27 @@ export default function PreferencesForm({ firstname }: any) {
             <div className="flex gap-3 items-center">
               <label
                 className="sm:text-sm xl:text-base"
-                htmlFor="diet"
+                htmlFor="vegetarian_with_eggs"
               >
                 Vegetarian with eggs
               </label>
               <input
-                id="diet"
+                id="vegetarian_with_eggs"
                 type="radio"
                 name="diet"
                 value={"vegetarian with eggs"}
+                title="vegetarian with eggs"
               />
             </div>
             <div className="flex gap-3 items-center">
               <label
                 className="sm:text-sm xl:text-base"
-                htmlFor="diet"
+                htmlFor="non_vegetarian"
               >
                 Non-vegetarian
               </label>
               <input
+                id="non_vegetarian"
                 title="non-vegetarian"
                 type="radio"
                 name="diet"
@@ -107,27 +126,29 @@ export default function PreferencesForm({ firstname }: any) {
             <div className="flex gap-3 items-center">
               <label
                 className="sm:text-sm xl:text-base"
-                htmlFor="spice"
+                htmlFor="low_spice"
               >
                 Low Spicy
               </label>
               <input
-                id="spice"
+                id="low_spice"
                 type="radio"
                 name="spice"
                 value={"low"}
+                title="low"
                 required
               />
             </div>
             <div className="flex gap-3 items-center">
               <label
                 className="sm:text-sm xl:text-base"
-                htmlFor="spice"
+                htmlFor="medium_spice"
               >
                 Medium spicy
               </label>
               <input
-                title="spice"
+                id="medium_spice"
+                title="medium"
                 type="radio"
                 name="spice"
                 value={"medium"}
@@ -136,11 +157,12 @@ export default function PreferencesForm({ firstname }: any) {
             <div className="flex gap-3 items-center">
               <label
                 className="sm:text-sm xl:text-base"
-                htmlFor="spice"
+                htmlFor="extra_spice"
               >
                 Extra spicy
               </label>
               <input
+                id="extra_spice"
                 title="extra"
                 type="radio"
                 name="spice"
@@ -149,12 +171,9 @@ export default function PreferencesForm({ firstname }: any) {
             </div>
           </div>
           <div className="flex flex-col gap-1">
-            <label
-              className="font-semibold sm:text-lg xl:text-xl"
-              htmlFor="allergies"
-            >
+            <div className="font-semibold sm:text-lg xl:text-xl">
               <h1>Do you have any allergies?</h1>
-            </label>
+            </div>
             <textarea
               id="allergies"
               className="border w-full min-h-20 pl-1"
